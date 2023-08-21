@@ -1,9 +1,9 @@
 # tp_arq_web_23
 Trabajo Practico - Arquitectura web - Universidad de Palermo 2023
 
-**Gestión vetenrinaria**  
+**Gestión veterinaria**  
 
-La API */pets/* gestión de una mascota en la veterinaria.  
+La API */pets/* gestión de una mascota de la veterinaria.  
 La API */vets/* gestión de los veterinarios de la veterinaria.  
 La API */petscare/* gestion de atención de mascotas por veterinario.  
 La API */users/* gestión de los dueños de las mascotas.  
@@ -20,7 +20,7 @@ CRUD
 **Endpoints /petscare/**  
 
 Endpoint para complejizar:  
-GET */petscare/history: Muestra todas consultas que se hicieron o se puede filtrar.  
+GET */petscare/history*: Muestra todas consultas que se hicieron en la veterinaria o se puede filtrar.  
 Filtros:  
     1.pet_id (optional): Filtrar por Id de mascota.  
     2.owner_id (optional): Filtrar por id de dueño.  
