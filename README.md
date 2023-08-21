@@ -19,7 +19,7 @@ CRUD
 
 **Endpoints /petscare/**  
 
-Endpoint para complejizar
+Endpoint para complejizar:  
 GET */petscare/history: Muestra todas consultas que se hicieron o se puede filtrar.  
 Filtros:  
     1.pet_id (optional): Filtrar por Id de mascota.  
