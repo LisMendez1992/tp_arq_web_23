@@ -1,0 +1,274 @@
+---
+openapi: 3.0.0
+info:
+  title: Pet Adoption and Reception API
+  description: The Pet Adoption and Reception API allows users to interact with a microservice designed for the adoption and reception of pets.
+  contact:
+    email: jessicalisrm@gmail.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+servers:
+- url: https://virtserver.swaggerhub.com/LISMENDEZ9219_1/RescueMeNow/1.0.0
+  description: SwaggerHub API Auto Mocking
+tags:
+- name: Pet
+  description: "Operations related to pets, including adoption and listing"
+- name: Adopter
+  description: Operations related to users who have adopted pets
+- name: Adoptions
+  description: Operations related to adoptions
+paths:
+  /pet:
+    get:
+      tags:
+      - Pet
+      summary: searches pet
+      description: |
+        Search for available pets in the system by specifying criteria.
+      operationId: searchPet
+      parameters:
+      - name: id
+        in: query
+        description: Search for a pet by ID
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: adopted
+        in: query
+        description: Search for adopted (true) or not adopted (false) pets
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: boolean
+      - name: gender
+        in: query
+        description: "Search for pets by gender (e.g., 'f' for female, 'm' for male)"
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          enum:
+          - f
+          - m
+      - name: species
+        in: query
+        description: "Seach for pets by species (e.g., cat or dog)"
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+          enum:
+          - cat
+          - dog
+      - name: limit
+        in: query
+        description: maximum number of records to return
+        required: false
+        style: form
+        explode: true
+        schema:
+          maximum: 50
+          minimum: 0
+          type: integer
+          format: int32
+      responses:
+        "200":
+          description: search results matching criteria
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Pet'
+        "400":
+          description: bad input parameter
+    put:
+      tags:
+      - Pet
+      summary: Update a pet
+      description: Update an existing pet in the system
+      operationId: updatePet
+      requestBody:
+        description: Updated pet data
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Pet'
+        required: true
+      responses:
+        "200":
+          description: Pet updated successfully
+        "400":
+          description: "Invalid input, object invalid"
+        "404":
+          description: Pet not found
+    post:
+      tags:
+      - Pet
+      summary: adds a pet
+      description: Adds a pet to the system
+      operationId: addPet
+      requestBody:
+        description: Pet to add
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Pet'
+      responses:
+        "201":
+          description: Pet created
+        "400":
+          description: "invalid input, object invalid"
+    delete:
+      tags:
+      - Pet
+      summary: Delete a pet
+      description: Delete a pet from the system
+      operationId: deletePet
+      responses:
+        "204":
+          description: Pet deleted successfully
+        "404":
+          description: Pet not found
+  /adopter:
+    get:
+      tags:
+      - Adopter
+      summary: Search for adopters
+      description: Search for adopters in the system by specifying criteria.
+      operationId: searchAdopter
+      parameters:
+      - name: id
+        in: query
+        description: Search an Adopter et by ID
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Search results matching the criteria
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Adopter'
+        "400":
+          description: "Bad request, invalid input parameter"
+    post:
+      tags:
+      - Adopter
+      summary: Add an adopter
+      description: Add a new adopter to the system
+      operationId: addAdopter
+      requestBody:
+        description: Data for creating a new adopter
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Adopter'
+      responses:
+        "201":
+          description: Adopter created successfully
+        "400":
+          description: "Bad request, invalid input"
+        "409":
+          description: "Conflict, an existing adopter already exists"
+components:
+  schemas:
+    Pet:
+      required:
+      - adopted
+      - age
+      - gender
+      - name
+      - size
+      - species
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the pet
+          format: uuid
+        name:
+          type: string
+          description: Name of the pet
+        species:
+          type: string
+          description: "Species of the pet (e.g., cat or dog)"
+        age:
+          type: integer
+          description: Age of the pet in months or years
+        gender:
+          type: string
+          description: "Gender of the pet (e.g., male, female)"
+        size:
+          type: string
+          description: "Size of the pet (e.g., small, medium, large)"
+        adopted:
+          type: boolean
+          description: Indicates whether the pet has been adopted (true) or is available for adoption (false).
+    Adopter:
+      required:
+      - address
+      - age
+      - dni
+      - last_name
+      - name
+      - pets
+      type: object
+      properties:
+        name:
+          type: string
+          description: First name of the adopter
+        last_name:
+          type: string
+          description: Last name of the adopter
+        age:
+          type: integer
+          description: Age of the adopter
+        dni:
+          type: string
+          description: National identification number of the adopter
+        pets:
+          type: array
+          description: List of UUIDs representing the adopted pets
+          items:
+            type: string
+            format: uuid
+        address:
+          type: string
+          description: Address of the adopter
+    Adoption:
+      required:
+      - adopter_id
+      - adoption_date
+      - adoption_id
+      - pet_id
+      type: object
+      properties:
+        adoption_id:
+          type: string
+          description: Unique identifier for the adoption
+          format: uuid
+        adopter_id:
+          type: string
+          description: Unique identifier for the adopter
+          format: uuid
+        pet_id:
+          type: string
+          description: Unique identifier for the adopted pet
+          format: uuid
+        adoption_date:
+          type: string
+          description: Date and time of the adoption
+          format: date-time
