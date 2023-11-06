@@ -80,8 +80,7 @@ const updateItem = async (req, res) => {
 
 const deleteItem = async (req, res) => {
     try {
-        req = matchedData(req);
-        const { id } = req;
+        const id = req.params.id;
         const deleteResponse = await recordModel.delete({ _id: id });
         const data = {
             deleted: deleteResponse.matchedCount
