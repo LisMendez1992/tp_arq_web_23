@@ -14,11 +14,11 @@ servers:
   description: SwaggerHub API Auto Mocking
 tags:
 - name: Pet
-  description: "Operations related to pets, including adoption and listing"
+  description: "Operations related to pets"
 - name: Adopter
-  description: Operations related to users who have adopted pets
+  description: "Operations related to users who have adopted pets"
 - name: Adoptions
-  description: Operations related to adoptions
+  description: "Operations related to adoptions"
 paths:
   /pet:
     get:
