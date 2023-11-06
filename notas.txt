@@ -1,0 +1,11 @@
+Vamos a usar el patron MVC
+
+Utils: funciones helpers
+
+npm mongoose -S ( para gestionar la conexcion con mongo)
+
+
+Modelo: Estructura de la base de datos. Coleccion, Documento. como esta estrucurado nuestro dato
+
+Routes: Puntos de acceso
+
